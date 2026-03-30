@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import get_db, UserLink
-from google_sheets import get_students_data
+from google_sheets import get_schedule_data, get_timetable_data
 from auth import is_admin
 from utils.cache import ttl_cache
 from config import CACHE_TTL_SECONDS
