@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Query
 from datetime import datetime, timedelta
 from schedule_parser import parse_schedule, find_date_in_schedule, format_schedule
-from gsheets import get_students_data
+from gsheets import get_schedule_data, get_timetable_data
 from utils.cache import ttl_cache
 from config import CACHE_TTL_SECONDS
 
