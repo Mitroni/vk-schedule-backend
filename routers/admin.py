@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from auth import is_admin
 from utils.cache import ttl_cache
-from google_sheets import get_schedule_data, get_timetable_data, get_students_data
+from gsheets import get_schedule_data, get_timetable_data, get_students_data
 from schedule_parser import parse_schedule, load_timetable
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
