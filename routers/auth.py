@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from database import get_db, UserLink
 from pydantic import BaseModel
@@ -11,7 +11,6 @@ class LinkRequest(BaseModel):
 
 @router.post("/link")
 async def link_user(request: LinkRequest, db: Session = Depends(get_db)):
-    # Проверяем, есть ли уже связь
     existing = db.query(UserLink).filter(UserLink.vk_user_id == request.vk_user_id).first()
     if existing:
         existing.full_name = request.full_name
