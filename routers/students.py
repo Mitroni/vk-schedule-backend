@@ -1,3 +1,4 @@
+print("СТУДЕНТЫ: модуль загружен")
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import get_db, UserLink
@@ -10,6 +11,7 @@ router = APIRouter(prefix="/api/students", tags=["students"])
 
 @ttl_cache(CACHE_TTL_SECONDS)
 def get_raw_students():
+    print("СТУДЕНТЫ: вызвана get_raw_students")
     data = get_students_data()
     if not data or len(data) < 2:
         return []
