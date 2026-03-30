@@ -32,7 +32,6 @@ async def schedule_for_date(date: str = Query(..., description="YYYY-MM-DD")):
 
 @router.get("/range")
 async def schedule_range(start: str, end: str):
-    # start и end YYYY-MM-DD
     try:
         start_date = datetime.strptime(start, "%Y-%m-%d").date()
         end_date = datetime.strptime(end, "%Y-%m-%d").date()
