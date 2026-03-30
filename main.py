@@ -1,23 +1,17 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from routers import schedule, students, admin, auth, bell
+import os
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+from config import CREDENTIALS_FILE, SPREADSHEET_ID
 
-app = FastAPI()
+def get_sheet(sheet_name):
+    # Получаем абсолютный путь к файлу credentials.json
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    creds_path = os.path.join(base_dir, CREDENTIALS_FILE)
+    
+    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+    creds = ServiceAccountCredentials.from_json_keyfile_name(creds_path, scope)
+    client = gspread.authorize(creds)
+    sheet = client.open_by_key(SPREADSHEET_ID).worksheet(sheet_name)
+    return sheet
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # для разработки; при деплое укажите домен фронтенда
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-app.include_router(schedule.router)
-app.include_router(students.router)
-app.include_router(admin.router)
-app.include_router(auth.router)
-app.include_router(bell.router)
-
-@app.get("/")
-def root():
-    return {"message": "VK Mini App API"}
+# остальные функции без изменений
