@@ -1,22 +1,16 @@
+import os
+import json
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-from config import CREDENTIALS_FILE, SPREADSHEET_ID
 
 def get_sheet(sheet_name):
-    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    creds = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILE, scope)
+    # Берём учётные данные из переменной окружения
+    creds_json = os.environ.get("GOOGLE_CREDENTIALS")
+    if not creds_json:
+        raise Exception("GOOGLE_CREDENTIALS environment variable not set")
+    creds_dict = json.loads(creds_json)
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, 
+        ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"])
     client = gspread.authorize(creds)
     sheet = client.open_by_key(SPREADSHEET_ID).worksheet(sheet_name)
     return sheet
-
-def get_schedule_data():
-    sheet = get_sheet("Учебное Расписание")
-    return sheet.get_all_values()
-
-def get_timetable_data():
-    sheet = get_sheet("Расписание звонков")
-    return sheet.get_all_values()
-
-def get_students_data():
-    sheet = get_sheet("Основная таблица")
-    return sheet.get_all_values()
