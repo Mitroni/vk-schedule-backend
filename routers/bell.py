@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from google_sheets import get_timetable_data
+from gsheets import get_timetable_data
 from schedule_parser import load_timetable
 
 router = APIRouter(prefix="/api/bell", tags=["bell"])
