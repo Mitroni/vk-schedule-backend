@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers import schedule, students, admin, auth, bell
 import uvicorn
 
-app = FastAPI(redirect_slashes=False)  # ← вот эта строка
+app = FastAPI(redirect_slashes=False)
 
 app.add_middleware(
     CORSMiddleware,
