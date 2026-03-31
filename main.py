@@ -3,6 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers import schedule, students, admin, auth, bell
 import uvicorn
 
+print("main: импортируем модули...")
+from routers import schedule, students, admin, auth, bell
+print("main: students.router =", students.router)
+
 app = FastAPI(redirect_slashes=False)
 
 app.add_middleware(
